@@ -261,56 +261,128 @@ class _HydraulicPumpChecklistState extends State<HydraulicPumpChecklist> {
 
   Widget _buildHeaderSection() {
     return Container(
-      width: double.infinity,
+      // width: double.infinity,
+      height: MediaQuery.of(context).size.height * 0.15,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.grey[100],
         border: Border.all(color: Colors.grey[300]!),
         borderRadius: BorderRadius.circular(8),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Row(
         children: [
-          const Text(
-            'Egypt Tooling Center',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Colors.blue,
-            ),
-          ),
-          const SizedBox(height: 8),
-          const Text(
-            'HYDRAULIC PUMP 700BAR;230V-1,5KW',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Row(
+          const Column(
             children: [
-              const Text('Ref. ID: ',
-                  style: TextStyle(fontWeight: FontWeight.bold)),
-              Text('ESC-T-P-001', style: TextStyle(color: Colors.grey[700])),
-              const Spacer(),
-              const Text('Revision: ',
-                  style: TextStyle(fontWeight: FontWeight.bold)),
-              Text('2', style: TextStyle(color: Colors.grey[700])),
-              const SizedBox(width: 16),
-              const Text('Date: ',
-                  style: TextStyle(fontWeight: FontWeight.bold)),
-              Text(DateFormat('dd/MM/yyyy').format(DateTime.now()),
-                  style: TextStyle(color: Colors.grey[700])),
+              Expanded(
+                child: Image(
+                    image: AssetImage('images/siemens_logo.png'), height: 50),
+              ),
+              Spacer(),
+              Expanded(
+                child: Text(
+                  'Egypt Tooling Center',
+                  style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blue,
+                  ),
+                ),
+              ),
             ],
           ),
-          const SizedBox(height: 4),
-          const Text(
-            'Issued By: Tooling department',
-            style: TextStyle(fontStyle: FontStyle.italic),
+          const Spacer(),
+          const Column(
+            children: [
+              Expanded(
+                child: Text(
+                  'HYDRAULIC PUMP 700BAR;230V-1,5KW',
+                  style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blue,
+                  ),
+                ),
+              ),
+              // Spacer(),
+              Expanded(
+                child: Image(
+                    image: AssetImage('images/report_tool.png'), height: 50),
+              ),
+            ],
+          ),
+          const Spacer(),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Expanded(
+                child: Text(
+                  'Ref. ID:  ESC-T-P-001',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, color: Colors.blue),
+                ),
+              ),
+              const Expanded(
+                child: Text(
+                  'Revision: 1.0',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, color: Colors.blue),
+                ),
+              ),
+              Expanded(
+                child: Text(
+                  "Date: ${DateFormat('dd/MM/yyyy').format(DateTime.now())}",
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, color: Colors.blue),
+                ),
+              ),
+            ],
           ),
         ],
       ),
+      //  Column(
+      //   crossAxisAlignment: CrossAxisAlignment.start,
+      //   children: [
+      //     const Text(
+      //       'Egypt Tooling Center',
+      //       style: TextStyle(
+      //         fontSize: 20,
+      //         fontWeight: FontWeight.bold,
+      //         color: Colors.blue,
+      //       ),
+      //     ),
+      //     const SizedBox(height: 8),
+      //     const Text(
+      //       'HYDRAULIC PUMP 700BAR;230V-1,5KW',
+      //       style: TextStyle(
+      //         fontSize: 16,
+      //         fontWeight: FontWeight.bold,
+      //       ),
+      //     ),
+      //     const SizedBox(height: 8),
+      //     Row(
+      //       children: [
+      //         const Text('Ref. ID: ',
+      //             style: TextStyle(fontWeight: FontWeight.bold)),
+      //         Text('ESC-T-P-001', style: TextStyle(color: Colors.grey[700])),
+      //         const Spacer(),
+      //         const Text('Revision: ',
+      //             style: TextStyle(fontWeight: FontWeight.bold)),
+      //         Text('2', style: TextStyle(color: Colors.grey[700])),
+      //         const SizedBox(width: 16),
+      //         const Text('Date: ',
+      //             style: TextStyle(fontWeight: FontWeight.bold)),
+      //         Text(DateFormat('dd/MM/yyyy').format(DateTime.now()),
+      //             style: TextStyle(color: Colors.grey[700])),
+      //       ],
+      //     ),
+      //     const SizedBox(height: 4),
+      //     const Text(
+      //       'Issued By: Tooling department',
+      //       style: TextStyle(fontStyle: FontStyle.italic),
+      //     ),
+      //   ],
+      // ),
     );
   }
 
