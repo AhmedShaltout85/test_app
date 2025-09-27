@@ -1,5 +1,3 @@
-
-
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:pdf/pdf.dart';
@@ -155,17 +153,16 @@ class _HydraulicPumpChecklistState extends State<HydraulicPumpChecklist> {
   Future<void> _loadResources() async {
     try {
       // Load Arabic font
-      final arabicFontData =
-          await rootBundle.load('assets/fonts/Amiri-Bold.ttf');
+      final arabicFontData = await rootBundle.load('fonts/Amiri-Bold.ttf');
       _arabicFont = pw.Font.ttf(arabicFontData);
 
       // Load English fonts that support Unicode
       final englishFontData =
-          await rootBundle.load('assets/fonts/NotoSans-Regular.ttf');
+          await rootBundle.load('fonts/NotoSans-Regular.ttf');
       _englishFont = pw.Font.ttf(englishFontData);
 
       final boldEnglishFontData =
-          await rootBundle.load('assets/fonts/NotoSans-Bold.ttf');
+          await rootBundle.load('fonts/NotoSans-Bold.ttf');
       _boldEnglishFont = pw.Font.ttf(boldEnglishFontData);
 
       // Load images
@@ -197,7 +194,7 @@ class _HydraulicPumpChecklistState extends State<HydraulicPumpChecklist> {
   Future<void> _loadFallbackFonts() async {
     try {
       // Try to load any available font that supports Unicode
-      final fontData = await rootBundle.load('fonts/arial.ttf');
+      final fontData = await rootBundle.load('fonts/DejaVuSans.ttf');
       _arabicFont = pw.Font.ttf(fontData);
       _englishFont = pw.Font.ttf(fontData);
       _boldEnglishFont = pw.Font.ttf(fontData);
@@ -967,6 +964,7 @@ class _HydraulicPumpChecklistState extends State<HydraulicPumpChecklist> {
                         fontSize: 9,
                         font: _englishFont,
                       ),
+                      textDirection: pw.TextDirection.ltr,
                     ),
                     pw.SizedBox(height: 3),
                     pw.Text(
@@ -980,9 +978,9 @@ class _HydraulicPumpChecklistState extends State<HydraulicPumpChecklist> {
                   ],
                 ),
               ),
-              _buildPdfTableCell(item.status == 'OK' ? 'OK' : ''),
-              _buildPdfTableCell(item.status == 'Not OK' ? 'Not OK' : ''),
-              _buildPdfTableCell(item.status == 'NA' ? 'NA' : ''),
+              _buildPdfTableCell(item.status == 'OK' ? '*' : ''),
+              _buildPdfTableCell(item.status == 'Not OK' ? '*' : ''),
+              _buildPdfTableCell(item.status == 'NA' ? '*' : ''),
             ],
           ),
       ],
