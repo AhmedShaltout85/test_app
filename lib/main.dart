@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:test_app/hydraulic_pump_checklist_model/hydraulic_pump_checklist_items.dart';
 
 import 'common_widgets/build_header_section.dart';
+import 'common_widgets/build_table_header.dart';
 
 void main() {
   runApp(const MyApp());
@@ -313,7 +314,7 @@ class _HydraulicPumpChecklistState extends State<HydraulicPumpChecklist> {
                   const SizedBox(height: 24),
 
                   // Checklist Table Header
-                  _buildTableHeader(),
+                  buildTableHeader('No.', 'Description', 'OK', 'Not OK', 'N/A'),
                   const SizedBox(height: 16),
                   const Text('Visual Inspections And Functional Inspections: ',
                       style: TextStyle(fontWeight: FontWeight.bold)),
@@ -507,43 +508,43 @@ class _HydraulicPumpChecklistState extends State<HydraulicPumpChecklist> {
     );
   }
 
-  Widget _buildTableHeader() {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-      decoration: BoxDecoration(
-        color: Colors.blue[50],
-        border: Border.all(color: Colors.blue[300]!),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: const Row(
-        children: [
-          SizedBox(
-              width: 40,
-              child:
-                  Text('No.', style: TextStyle(fontWeight: FontWeight.bold))),
-          Expanded(
-              flex: 3,
-              child: Text('Descriptions',
-                  style: TextStyle(fontWeight: FontWeight.bold))),
-          SizedBox(
-              width: 60,
-              child: Text('OK',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center)),
-          SizedBox(
-              width: 80,
-              child: Text('Not OK',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center)),
-          SizedBox(
-              width: 40,
-              child: Text('NA',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center)),
-        ],
-      ),
-    );
-  }
+  // Widget _buildTableHeader() {
+  //   return Container(
+  //     padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+  //     decoration: BoxDecoration(
+  //       color: Colors.blue[50],
+  //       border: Border.all(color: Colors.blue[300]!),
+  //       borderRadius: BorderRadius.circular(8),
+  //     ),
+  //     child: const Row(
+  //       children: [
+  //         SizedBox(
+  //             width: 40,
+  //             child:
+  //                 Text('No.', style: TextStyle(fontWeight: FontWeight.bold))),
+  //         Expanded(
+  //             flex: 3,
+  //             child: Text('Descriptions',
+  //                 style: TextStyle(fontWeight: FontWeight.bold))),
+  //         SizedBox(
+  //             width: 60,
+  //             child: Text('OK',
+  //                 style: TextStyle(fontWeight: FontWeight.bold),
+  //                 textAlign: TextAlign.center)),
+  //         SizedBox(
+  //             width: 80,
+  //             child: Text('Not OK',
+  //                 style: TextStyle(fontWeight: FontWeight.bold),
+  //                 textAlign: TextAlign.center)),
+  //         SizedBox(
+  //             width: 40,
+  //             child: Text('NA',
+  //                 style: TextStyle(fontWeight: FontWeight.bold),
+  //                 textAlign: TextAlign.center)),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   Widget _buildChecklistItem(HydraulicPumpChecklistModel item) {
     return Container(
@@ -1081,6 +1082,7 @@ class _HydraulicPumpChecklistState extends State<HydraulicPumpChecklist> {
     );
   }
 
+//clear form data function with dialog
   void _clearForm() {
     showDialog(
       context: context,
@@ -1113,7 +1115,7 @@ class _HydraulicPumpChecklistState extends State<HydraulicPumpChecklist> {
       ),
     );
   }
-
+//get form data
   Map<String, String> getFormData() {
     Map<String, String> formData = {};
     _textControllers.forEach((key, controller) {
@@ -1126,7 +1128,7 @@ class _HydraulicPumpChecklistState extends State<HydraulicPumpChecklist> {
 
     return formData;
   }
-
+//clear form
   void clearForm() {
     setState(() {
       for (var controller in _textControllers.values) {
