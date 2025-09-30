@@ -7,7 +7,9 @@ import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
 import 'package:test_app/hydraulic_pump_checklist_model/hydraulic_pump_checklist_items.dart';
 
+import 'common_widgets/build_check_list_item.dart';
 import 'common_widgets/build_header_section.dart';
+import 'common_widgets/build_signature_section.dart';
 import 'common_widgets/build_table_header.dart';
 
 void main() {
@@ -322,12 +324,14 @@ class _HydraulicPumpChecklistState extends State<HydraulicPumpChecklist> {
 
                   // Checklist Items
                   ...HydraulicPumpChecklistModel.checklistItems
-                      .map((item) => _buildChecklistItem(item)),
+                      .map((item) => BuildChecklistItem(item: item,)),
+                      // .map((item) => buildChecklistItem(item)),
 
                   const SizedBox(height: 32),
 
                   // Signature Section
-                  _buildSignatureSection(),
+                  buildSignatureSection(
+                      'Signature Name', 'Signature date', _textControllers),
                   const SizedBox(height: 32),
                 ],
               ),
@@ -546,182 +550,183 @@ class _HydraulicPumpChecklistState extends State<HydraulicPumpChecklist> {
   //   );
   // }
 
-  Widget _buildChecklistItem(HydraulicPumpChecklistModel item) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(color: Colors.grey[300]!),
-        borderRadius: BorderRadius.circular(8),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
-            spreadRadius: 1,
-            blurRadius: 3,
-            offset: const Offset(0, 1),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                width: 40,
-                child: Text(
-                  item.id.toString(),
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-              Expanded(
-                flex: 3,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      item.description,
-                      style: const TextStyle(fontSize: 14, height: 1.4),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      item.arabicDescription,
-                      style: const TextStyle(fontSize: 14, height: 1.4),
-                      textAlign: TextAlign.right,
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                width: 60,
-                child: Radio<String>(
-                  value: 'OK',
-                  groupValue: item.status,
-                  onChanged: (value) {
-                    setState(() {
-                      item.status = value;
-                    });
-                  },
-                ),
-              ),
-              SizedBox(
-                width: 80,
-                child: Radio<String>(
-                  value: 'Not OK',
-                  groupValue: item.status,
-                  onChanged: (value) {
-                    setState(() {
-                      item.status = value;
-                    });
-                  },
-                ),
-              ),
-              SizedBox(
-                width: 40,
-                child: Radio<String>(
-                  value: 'NA',
-                  groupValue: item.status,
-                  onChanged: (value) {
-                    setState(() {
-                      item.status = value;
-                    });
-                  },
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
+  // Widget _buildChecklistItem(HydraulicPumpChecklistModel item) {
+  //   return Container(
+  //     margin: const EdgeInsets.only(bottom: 12),
+  //     padding: const EdgeInsets.all(16),
+  //     decoration: BoxDecoration(
+  //       color: Colors.white,
+  //       border: Border.all(color: Colors.grey[300]!),
+  //       borderRadius: BorderRadius.circular(8),
+  //       boxShadow: [
+  //         BoxShadow(
+  //           color: Colors.grey.withOpacity(0.1),
+  //           spreadRadius: 1,
+  //           blurRadius: 3,
+  //           offset: const Offset(0, 1),
+  //         ),
+  //       ],
+  //     ),
+  //     child: Column(
+  //       crossAxisAlignment: CrossAxisAlignment.start,
+  //       children: [
+  //         Row(
+  //           crossAxisAlignment: CrossAxisAlignment.start,
+  //           children: [
+  //             SizedBox(
+  //               width: 40,
+  //               child: Text(
+  //                 item.id.toString(),
+  //                 style: const TextStyle(fontWeight: FontWeight.bold),
+  //               ),
+  //             ),
+  //             Expanded(
+  //               flex: 3,
+  //               child: Column(
+  //                 crossAxisAlignment: CrossAxisAlignment.start,
+  //                 children: [
+  //                   Text(
+  //                     item.description,
+  //                     style: const TextStyle(fontSize: 14, height: 1.4),
+  //                   ),
+  //                   const SizedBox(height: 8),
+  //                   Text(
+  //                     item.arabicDescription,
+  //                     style: const TextStyle(fontSize: 14, height: 1.4),
+  //                     textAlign: TextAlign.right,
+  //                   ),
+  //                 ],
+  //               ),
+  //             ),
+  //             SizedBox(
+  //               width: 60,
+  //               child: Radio<String>(
+  //                 value: 'OK',
+  //                 groupValue: item.status,
+  //                 onChanged: (value) {
+  //                   setState(() {
+  //                     item.status = value;
+  //                   });
+  //                 },
+  //               ),
+  //             ),
+  //             SizedBox(
+  //               width: 80,
+  //               child: Radio<String>(
+  //                 value: 'Not OK',
+  //                 groupValue: item.status,
+  //                 onChanged: (value) {
+  //                   setState(() {
+  //                     item.status = value;
+  //                   });
+  //                 },
+  //               ),
+  //             ),
+  //             SizedBox(
+  //               width: 40,
+  //               child: Radio<String>(
+  //                 value: 'NA',
+  //                 groupValue: item.status,
+  //                 onChanged: (value) {
+  //                   setState(() {
+  //                     item.status = value;
+  //                   });
+  //                 },
+  //               ),
+  //             ),
+  //           ],
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
-  Widget _buildSignatureSection() {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey[300]!),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Signature with name',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(height: 8),
-                    Container(
-                      height: 35,
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey[400]!),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      child: TextField(
-                        controller: _textControllers['signatureName'],
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.grey[700],
-                        ),
-                        decoration: const InputDecoration(
-                          border: InputBorder.none,
-                          isDense: true,
-                          contentPadding: EdgeInsets.symmetric(vertical: 8),
-                          hintText: 'Enter name',
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(width: 20),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Signature date',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(height: 8),
-                    Container(
-                      height: 35,
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey[400]!),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      child: TextField(
-                        controller: _textControllers['signatureDate'],
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.grey[700],
-                        ),
-                        decoration: const InputDecoration(
-                          border: InputBorder.none,
-                          isDense: true,
-                          contentPadding: EdgeInsets.symmetric(vertical: 8),
-                          hintText: 'Enter date',
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
+  // Widget _buildSignatureSection() {
+  //   return Container(
+  //     padding: const EdgeInsets.all(16),
+  //     decoration: BoxDecoration(
+  //       border: Border.all(color: Colors.grey[300]!),
+  //       borderRadius: BorderRadius.circular(8),
+  //     ),
+  //     child: Column(
+  //       children: [
+  //         Row(
+  //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //           children: [
+  //             Expanded(
+  //               child: Column(
+  //                 crossAxisAlignment: CrossAxisAlignment.start,
+  //                 children: [
+  //                   const Text(
+  //                     'Signature with name',
+  //                     style: TextStyle(fontWeight: FontWeight.bold),
+  //                   ),
+  //                   const SizedBox(height: 8),
+  //                   Container(
+  //                     height: 35,
+  //                     padding: const EdgeInsets.symmetric(horizontal: 8),
+  //                     decoration: BoxDecoration(
+  //                       border: Border.all(color: Colors.grey[400]!),
+  //                       borderRadius: BorderRadius.circular(4),
+  //                     ),
+  //                     child: TextField(
+  //                       controller: _textControllers['signatureName'],
+  //                       style: TextStyle(
+  //                         fontSize: 14,
+  //                         color: Colors.grey[700],
+  //                       ),
+  //                       decoration: const InputDecoration(
+  //                         border: InputBorder.none,
+  //                         isDense: true,
+  //                         contentPadding: EdgeInsets.symmetric(vertical: 8),
+  //                         hintText: 'Enter name',
+  //                       ),
+  //                     ),
+  //                   ),
+  //                 ],
+  //               ),
+  //             ),
+  //             const SizedBox(width: 20),
+  //             Expanded(
+  //               child: Column(
+  //                 crossAxisAlignment: CrossAxisAlignment.start,
+  //                 children: [
+  //                   const Text(
+  //                     'Signature date',
+  //                     style: TextStyle(fontWeight: FontWeight.bold),
+  //                   ),
+  //                   const SizedBox(height: 8),
+  //                   Container(
+  //                     height: 35,
+  //                     padding: const EdgeInsets.symmetric(horizontal: 8),
+  //                     decoration: BoxDecoration(
+  //                       border: Border.all(color: Colors.grey[400]!),
+  //                       borderRadius: BorderRadius.circular(4),
+  //                     ),
+  //                     child: TextField(
+  //                       controller: _textControllers['signatureDate'],
+  //                       style: TextStyle(
+  //                         fontSize: 14,
+  //                         color: Colors.grey[700],
+  //                       ),
+  //                       decoration: const InputDecoration(
+  //                         border: InputBorder.none,
+  //                         isDense: true,
+  //                         contentPadding: EdgeInsets.symmetric(vertical: 8),
+  //                         hintText: 'Enter date',
+  //                       ),
+  //                     ),
+  //                   ),
+  //                 ],
+  //               ),
+  //             ),
+  //           ],
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
+  
 
   Future<void> _saveFormData() async {
     setState(() {
@@ -1115,6 +1120,7 @@ class _HydraulicPumpChecklistState extends State<HydraulicPumpChecklist> {
       ),
     );
   }
+
 //get form data
   Map<String, String> getFormData() {
     Map<String, String> formData = {};
@@ -1128,6 +1134,7 @@ class _HydraulicPumpChecklistState extends State<HydraulicPumpChecklist> {
 
     return formData;
   }
+
 //clear form
   void clearForm() {
     setState(() {
