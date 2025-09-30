@@ -7,9 +7,10 @@ import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
 import 'package:test_app/hydraulic_pump_checklist_model/hydraulic_pump_checklist_items.dart';
 
-import 'common_widgets/build_pdf/build_pdf_header.dart';
-import 'common_widgets/build_pdf/build_pdf_inspection_info_and_body.dart';
-import 'common_widgets/build_pdf/build_pdf_signature_section.dart';
+// import 'common_widgets/build_pdf/build_pdf_header.dart';
+// import 'common_widgets/build_pdf/build_pdf_inspection_info_and_body.dart';
+// import 'common_widgets/build_pdf/build_pdf_signature_section.dart';
+import 'common_widgets/build_pdf/generate_pdf.dart';
 import 'common_widgets/build_report/build_check_list_item.dart';
 import 'common_widgets/build_report/build_header_section.dart';
 import 'common_widgets/build_report/build_info_text_field.dart';
@@ -324,13 +325,16 @@ class _HydraulicPumpChecklistState extends State<HydraulicPumpChecklist> {
                   buildTableHeader('No.', 'Description', 'OK', 'Not OK', 'N/A'),
                   const SizedBox(height: 16),
                   const Text('Visual Inspections And Functional Inspections: ',
-                      style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue)),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.blue)),
                   const SizedBox(height: 16),
 
                   // Checklist Items
                   ...HydraulicPumpChecklistModel.checklistItems
-                      .map((item) => BuildChecklistItem(item: item,)),
-                      // .map((item) => buildChecklistItem(item)),
+                      .map((item) => BuildChecklistItem(
+                            item: item,
+                          )),
+                  // .map((item) => buildChecklistItem(item)),
 
                   const SizedBox(height: 32),
 
@@ -731,7 +735,6 @@ class _HydraulicPumpChecklistState extends State<HydraulicPumpChecklist> {
   //     ),
   //   );
   // }
-  
 
   Future<void> _saveFormData() async {
     setState(() {
@@ -745,7 +748,8 @@ class _HydraulicPumpChecklistState extends State<HydraulicPumpChecklist> {
       }
 
       // Generate PDF
-      final pdf = await _generatePdf();
+      final pdf = await generatePdf(_boldEnglishFont, _englishFont,
+          _siemensLogo, _reportToolImage, _arabicFont);
 
       // Save and share PDF
       await Printing.sharePdf(
@@ -782,37 +786,37 @@ class _HydraulicPumpChecklistState extends State<HydraulicPumpChecklist> {
     }
   }
 
-  Future<Uint8List> _generatePdf() async {
-    final pdf = pw.Document();
-    final now = DateTime.now();
-    final formattedDate = DateFormat('dd MMM yyyy').format(now);
+  // Future<Uint8List> _generatePdf() async {
+  //   final pdf = pw.Document();
+  //   final now = DateTime.now();
+  //   final formattedDate = DateFormat('dd MMM yyyy').format(now);
 
-    // Add a page to the PDF
-    pdf.addPage(
-      pw.MultiPage(
-        pageFormat: PdfPageFormat.a4,
-        margin: const pw.EdgeInsets.all(32),
-        build: (pw.Context context) => [
-          // Header Section
-          buildPdfHeader(formattedDate, _boldEnglishFont, _siemensLogo,_reportToolImage),
-          pw.SizedBox(height: 20),
+  //   // Add a page to the PDF
+  //   pdf.addPage(
+  //     pw.MultiPage(
+  //       pageFormat: PdfPageFormat.a4,
+  //       margin: const pw.EdgeInsets.all(32),
+  //       build: (pw.Context context) => [
+  //         // Header Section
+  //         buildPdfHeader(formattedDate, _boldEnglishFont, _siemensLogo,_reportToolImage),
+  //         pw.SizedBox(height: 20),
 
-          // Inspection Information Section
-          buildPdfInspectionInfo(_boldEnglishFont, _englishFont),
-          pw.SizedBox(height: 20),
+  //         // Inspection Information Section
+  //         buildPdfInspectionInfo(_boldEnglishFont, _englishFont),
+  //         pw.SizedBox(height: 20),
 
-          // Checklist Section
-          buildPdfChecklist(_arabicFont, _englishFont, _boldEnglishFont,HydraulicPumpChecklistModel.checklistItems),
-          pw.SizedBox(height: 30),
+  //         // Checklist Section
+  //         buildPdfChecklist(_arabicFont, _englishFont, _boldEnglishFont,HydraulicPumpChecklistModel.checklistItems),
+  //         pw.SizedBox(height: 30),
 
-          // Signature Section
-          buildPdfSignatureSection(_boldEnglishFont, _englishFont),
-        ],
-      ),
-    );
+  //         // Signature Section
+  //         buildPdfSignatureSection(_boldEnglishFont, _englishFont),
+  //       ],
+  //     ),
+  //   );
 
-    return await pdf.save();
-  }
+  //   return await pdf.save();
+  // }
 
   // pw.Widget _buildPdfHeader(String date) {
   //   return pw.Container(
