@@ -5,6 +5,7 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
+import 'package:test_app/common_widgets/form_data/clear_form_dialog.dart';
 import 'package:test_app/hydraulic_pump_checklist_model/hydraulic_pump_checklist_items.dart';
 
 // import 'common_widgets/build_pdf/build_pdf_header.dart';
@@ -1096,39 +1097,42 @@ class _HydraulicPumpChecklistState extends State<HydraulicPumpChecklist> {
   //   );
   // }
 
-//clear form data function with dialog
+//clear form data function with dialog(CALLING DIALOG FROM clearFormDialog)
   void _clearForm() {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Clear Form'),
-        content: const Text('Are you sure you want to clear all form data?'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () {
-              clearForm();
-              Navigator.pop(context);
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text(
-                    'Form cleared successfully',
-                    style: TextStyle(color: Colors.white),
-                    textAlign: TextAlign.center,
-                  ),
-                  backgroundColor: Colors.orange,
-                ),
-              );
-            },
-            child: const Text('Clear'),
-          ),
-        ],
-      ),
-    );
+    clearFormDialog(context, clearForm);
   }
+  // void _clearForm() {
+  //   showDialog(
+  //     context: context,
+  //     builder: (context) => AlertDialog(
+  //       title: const Text('Clear Form'),
+  //       content: const Text('Are you sure you want to clear all form data?'),
+  //       actions: [
+  //         TextButton(
+  //           onPressed: () => Navigator.pop(context),
+  //           child: const Text('Cancel'),
+  //         ),
+  //         TextButton(
+  //           onPressed: () {
+  //             clearForm();
+  //             Navigator.pop(context);
+  //             ScaffoldMessenger.of(context).showSnackBar(
+  //               const SnackBar(
+  //                 content: Text(
+  //                   'Form cleared successfully',
+  //                   style: TextStyle(color: Colors.white),
+  //                   textAlign: TextAlign.center,
+  //                 ),
+  //                 backgroundColor: Colors.orange,
+  //               ),
+  //             );
+  //           },
+  //           child: const Text('Clear'),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
 //get form data
   Map<String, String> getFormData() {
@@ -1145,7 +1149,10 @@ class _HydraulicPumpChecklistState extends State<HydraulicPumpChecklist> {
   }
 
 //clear form
-  void clearForm() {
+void clearForm() { //clear form data by checklist
+  clearFormByChecklist( HydraulicPumpChecklistModel.checklistItems);
+}
+  void clearFormByChecklist(List<HydraulicPumpChecklistModel> checklistItems) {
     setState(() {
       for (var controller in textControllers.values) {
         controller.clear();
@@ -1154,7 +1161,7 @@ class _HydraulicPumpChecklistState extends State<HydraulicPumpChecklist> {
       textControllers['inspectionDate']?.text =
           DateFormat('dd/MM/yyyy').format(DateTime.now());
 
-      for (var item in HydraulicPumpChecklistModel.checklistItems) {
+      for (var item in checklistItems) {
         item.status = null;
       }
     });
