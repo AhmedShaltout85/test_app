@@ -7,12 +7,15 @@ import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
 import 'package:test_app/hydraulic_pump_checklist_model/hydraulic_pump_checklist_items.dart';
 
-import 'common_widgets/build_check_list_item.dart';
-import 'common_widgets/build_header_section.dart';
-import 'common_widgets/build_info_text_field.dart';
-import 'common_widgets/build_inspection_info_section.dart';
-import 'common_widgets/build_signature_section.dart';
-import 'common_widgets/build_table_header.dart';
+import 'common_widgets/build_pdf/build_pdf_header.dart';
+import 'common_widgets/build_pdf/build_pdf_inspection_info_and_body.dart';
+import 'common_widgets/build_pdf/build_pdf_signature_section.dart';
+import 'common_widgets/build_report/build_check_list_item.dart';
+import 'common_widgets/build_report/build_header_section.dart';
+import 'common_widgets/build_report/build_info_text_field.dart';
+import 'common_widgets/build_report/build_inspection_info_section.dart';
+import 'common_widgets/build_report/build_signature_section.dart';
+import 'common_widgets/build_report/build_table_header.dart';
 
 void main() {
   runApp(const MyApp());
@@ -321,7 +324,7 @@ class _HydraulicPumpChecklistState extends State<HydraulicPumpChecklist> {
                   buildTableHeader('No.', 'Description', 'OK', 'Not OK', 'N/A'),
                   const SizedBox(height: 16),
                   const Text('Visual Inspections And Functional Inspections: ',
-                      style: TextStyle(fontWeight: FontWeight.bold)),
+                      style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue)),
                   const SizedBox(height: 16),
 
                   // Checklist Items
@@ -791,19 +794,19 @@ class _HydraulicPumpChecklistState extends State<HydraulicPumpChecklist> {
         margin: const pw.EdgeInsets.all(32),
         build: (pw.Context context) => [
           // Header Section
-          _buildPdfHeader(formattedDate),
+          buildPdfHeader(formattedDate, _boldEnglishFont, _siemensLogo,_reportToolImage),
           pw.SizedBox(height: 20),
 
           // Inspection Information Section
-          _buildPdfInspectionInfo(),
+          buildPdfInspectionInfo(_boldEnglishFont, _englishFont),
           pw.SizedBox(height: 20),
 
           // Checklist Section
-          _buildPdfChecklist(),
+          buildPdfChecklist(_arabicFont, _englishFont, _boldEnglishFont,HydraulicPumpChecklistModel.checklistItems),
           pw.SizedBox(height: 30),
 
           // Signature Section
-          _buildPdfSignatureSection(),
+          buildPdfSignatureSection(_boldEnglishFont, _englishFont),
         ],
       ),
     );
@@ -811,283 +814,283 @@ class _HydraulicPumpChecklistState extends State<HydraulicPumpChecklist> {
     return await pdf.save();
   }
 
-  pw.Widget _buildPdfHeader(String date) {
-    return pw.Container(
-      width: double.infinity,
-      padding: const pw.EdgeInsets.all(16),
-      decoration: pw.BoxDecoration(
-        border: pw.Border.all(color: PdfColors.grey),
-        borderRadius: const pw.BorderRadius.all(pw.Radius.circular(8)),
-      ),
-      child: pw.Row(
-        mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-        children: [
-          pw.Column(
-            children: [
-              pw.Image(_siemensLogo, height: 40),
-              pw.SizedBox(height: 10),
-              pw.Text(
-                'Egypt Tooling Center',
-                style: pw.TextStyle(
-                  fontSize: 14,
-                  fontWeight: pw.FontWeight.bold,
-                  color: PdfColors.blue,
-                  font: _boldEnglishFont,
-                ),
-              ),
-            ],
-          ),
-          pw.Column(
-            children: [
-              pw.Text(
-                'HYDRAULIC PUMP 700BAR;230V-1,5KW',
-                style: pw.TextStyle(
-                  fontSize: 14,
-                  fontWeight: pw.FontWeight.bold,
-                  color: PdfColors.blue,
-                  font: _boldEnglishFont,
-                ),
-              ),
-              pw.SizedBox(height: 10),
-              pw.Image(_reportToolImage, height: 50),
-            ],
-          ),
-          pw.Column(
-            mainAxisAlignment: pw.MainAxisAlignment.start,
-            crossAxisAlignment: pw.CrossAxisAlignment.start,
-            children: [
-              pw.Text(
-                'Ref. ID: ESC-T-P-001',
-                style: pw.TextStyle(
-                  fontWeight: pw.FontWeight.bold,
-                  color: PdfColors.blue,
-                  fontSize: 10,
-                  font: _boldEnglishFont,
-                ),
-              ),
-              pw.SizedBox(height: 5),
-              pw.Text(
-                'Revision: 1.0',
-                style: pw.TextStyle(
-                  fontWeight: pw.FontWeight.bold,
-                  color: PdfColors.blue,
-                  fontSize: 10,
-                  font: _boldEnglishFont,
-                ),
-              ),
-              pw.SizedBox(height: 5),
-              pw.Text(
-                "Date: $date",
-                style: pw.TextStyle(
-                  fontWeight: pw.FontWeight.bold,
-                  color: PdfColors.blue,
-                  fontSize: 10,
-                  font: _boldEnglishFont,
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
+  // pw.Widget _buildPdfHeader(String date) {
+  //   return pw.Container(
+  //     width: double.infinity,
+  //     padding: const pw.EdgeInsets.all(16),
+  //     decoration: pw.BoxDecoration(
+  //       border: pw.Border.all(color: PdfColors.grey),
+  //       borderRadius: const pw.BorderRadius.all(pw.Radius.circular(8)),
+  //     ),
+  //     child: pw.Row(
+  //       mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+  //       children: [
+  //         pw.Column(
+  //           children: [
+  //             pw.Image(_siemensLogo, height: 40),
+  //             pw.SizedBox(height: 10),
+  //             pw.Text(
+  //               'Egypt Tooling Center',
+  //               style: pw.TextStyle(
+  //                 fontSize: 14,
+  //                 fontWeight: pw.FontWeight.bold,
+  //                 color: PdfColors.blue,
+  //                 font: _boldEnglishFont,
+  //               ),
+  //             ),
+  //           ],
+  //         ),
+  //         pw.Column(
+  //           children: [
+  //             pw.Text(
+  //               'HYDRAULIC PUMP 700BAR;230V-1,5KW',
+  //               style: pw.TextStyle(
+  //                 fontSize: 14,
+  //                 fontWeight: pw.FontWeight.bold,
+  //                 color: PdfColors.blue,
+  //                 font: _boldEnglishFont,
+  //               ),
+  //             ),
+  //             pw.SizedBox(height: 10),
+  //             pw.Image(_reportToolImage, height: 50),
+  //           ],
+  //         ),
+  //         pw.Column(
+  //           mainAxisAlignment: pw.MainAxisAlignment.start,
+  //           crossAxisAlignment: pw.CrossAxisAlignment.start,
+  //           children: [
+  //             pw.Text(
+  //               'Ref. ID: ESC-T-P-001',
+  //               style: pw.TextStyle(
+  //                 fontWeight: pw.FontWeight.bold,
+  //                 color: PdfColors.blue,
+  //                 fontSize: 10,
+  //                 font: _boldEnglishFont,
+  //               ),
+  //             ),
+  //             pw.SizedBox(height: 5),
+  //             pw.Text(
+  //               'Revision: 1.0',
+  //               style: pw.TextStyle(
+  //                 fontWeight: pw.FontWeight.bold,
+  //                 color: PdfColors.blue,
+  //                 fontSize: 10,
+  //                 font: _boldEnglishFont,
+  //               ),
+  //             ),
+  //             pw.SizedBox(height: 5),
+  //             pw.Text(
+  //               "Date: $date",
+  //               style: pw.TextStyle(
+  //                 fontWeight: pw.FontWeight.bold,
+  //                 color: PdfColors.blue,
+  //                 fontSize: 10,
+  //                 font: _boldEnglishFont,
+  //               ),
+  //             ),
+  //           ],
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
-  pw.Widget _buildPdfInspectionInfo() {
-    return pw.Table(
-      border: pw.TableBorder.all(color: PdfColors.grey),
-      children: [
-        _buildPdfInfoRow('KIT SKU', textControllers['kitSku']?.text ?? ''),
-        _buildPdfInfoRow('Item SKU', textControllers['itemSku']?.text ?? ''),
-        _buildPdfInfoRow(
-            'KIT description', textControllers['kitDescription']?.text ?? ''),
-        _buildPdfInfoRow('Item description',
-            textControllers['itemDescription']?.text ?? ''),
-        _buildPdfInfoRow(
-            'KIT serial No.', textControllers['kitSerialNo']?.text ?? ''),
-        _buildPdfInfoRow(
-            'Item serial No.', textControllers['itemSerialNo']?.text ?? ''),
-        _buildPdfInfoRow(
-            'Inspected by', textControllers['inspectedBy']?.text ?? ''),
-        _buildPdfInfoRow(
-            'Item Model', textControllers['itemModel']?.text ?? ''),
-        _buildPdfInfoRow(
-            'Inspection date', textControllers['inspectionDate']?.text ?? ''),
-        _buildPdfInfoRow('Next inspection date',
-            textControllers['nextInspectionDate']?.text ?? ''),
-      ],
-    );
-  }
+  // pw.Widget _buildPdfInspectionInfo() {
+  //   return pw.Table(
+  //     border: pw.TableBorder.all(color: PdfColors.grey),
+  //     children: [
+  //       _buildPdfInfoRow('KIT SKU', textControllers['kitSku']?.text ?? ''),
+  //       _buildPdfInfoRow('Item SKU', textControllers['itemSku']?.text ?? ''),
+  //       _buildPdfInfoRow(
+  //           'KIT description', textControllers['kitDescription']?.text ?? ''),
+  //       _buildPdfInfoRow('Item description',
+  //           textControllers['itemDescription']?.text ?? ''),
+  //       _buildPdfInfoRow(
+  //           'KIT serial No.', textControllers['kitSerialNo']?.text ?? ''),
+  //       _buildPdfInfoRow(
+  //           'Item serial No.', textControllers['itemSerialNo']?.text ?? ''),
+  //       _buildPdfInfoRow(
+  //           'Inspected by', textControllers['inspectedBy']?.text ?? ''),
+  //       _buildPdfInfoRow(
+  //           'Item Model', textControllers['itemModel']?.text ?? ''),
+  //       _buildPdfInfoRow(
+  //           'Inspection date', textControllers['inspectionDate']?.text ?? ''),
+  //       _buildPdfInfoRow('Next inspection date',
+  //           textControllers['nextInspectionDate']?.text ?? ''),
+  //     ],
+  //   );
+  // }
 
-  pw.TableRow _buildPdfInfoRow(String label, String value) {
-    return pw.TableRow(
-      children: [
-        pw.Container(
-          padding: const pw.EdgeInsets.all(8),
-          child: pw.Text(
-            label,
-            style: pw.TextStyle(
-              fontWeight: pw.FontWeight.bold,
-              fontSize: 10,
-              font: _boldEnglishFont,
-            ),
-          ),
-        ),
-        pw.Container(
-          padding: const pw.EdgeInsets.all(8),
-          child: pw.Text(
-            value.isEmpty ? '-' : value,
-            style: pw.TextStyle(
-              fontSize: 10,
-              font: _englishFont,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
+  // pw.TableRow _buildPdfInfoRow(String label, String value) {
+  //   return pw.TableRow(
+  //     children: [
+  //       pw.Container(
+  //         padding: const pw.EdgeInsets.all(8),
+  //         child: pw.Text(
+  //           label,
+  //           style: pw.TextStyle(
+  //             fontWeight: pw.FontWeight.bold,
+  //             fontSize: 10,
+  //             font: _boldEnglishFont,
+  //           ),
+  //         ),
+  //       ),
+  //       pw.Container(
+  //         padding: const pw.EdgeInsets.all(8),
+  //         child: pw.Text(
+  //           value.isEmpty ? '-' : value,
+  //           style: pw.TextStyle(
+  //             fontSize: 10,
+  //             font: _englishFont,
+  //           ),
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
 
-  pw.Widget _buildPdfChecklist() {
-    return pw.Table(
-      border: pw.TableBorder.all(color: PdfColors.grey),
-      columnWidths: {
-        0: const pw.FlexColumnWidth(0.5),
-        1: const pw.FlexColumnWidth(4),
-        2: const pw.FlexColumnWidth(0.5),
-        3: const pw.FlexColumnWidth(0.7),
-        4: const pw.FlexColumnWidth(0.5),
-      },
-      children: [
-        // Header row
-        pw.TableRow(
-          decoration: const pw.BoxDecoration(color: PdfColors.blue50),
-          children: [
-            _buildPdfTableCell('No.', isHeader: true),
-            _buildPdfTableCell('Descriptions', isHeader: true),
-            _buildPdfTableCell('OK', isHeader: true),
-            _buildPdfTableCell('Not OK', isHeader: true),
-            _buildPdfTableCell('NA', isHeader: true),
-          ],
-        ),
-        // Checklist items
-        for (var item in HydraulicPumpChecklistModel.checklistItems)
-          pw.TableRow(
-            children: [
-              _buildPdfTableCell(item.id.toString()),
-              pw.Container(
-                padding: const pw.EdgeInsets.all(6),
-                child: pw.Column(
-                  crossAxisAlignment: pw.CrossAxisAlignment.start,
-                  children: [
-                    pw.Text(
-                      item.description,
-                      style: pw.TextStyle(
-                        fontSize: 9,
-                        font: _englishFont,
-                      ),
-                      textDirection: pw.TextDirection.ltr,
-                    ),
-                    pw.SizedBox(height: 3),
-                    pw.Text(
-                      item.arabicDescription,
-                      style: pw.TextStyle(
-                        fontSize: 9,
-                        font: _arabicFont,
-                      ),
-                      textDirection: pw.TextDirection.rtl,
-                    ),
-                  ],
-                ),
-              ),
-              _buildPdfTableCell(item.status == 'OK' ? '*' : ''),
-              _buildPdfTableCell(item.status == 'Not OK' ? '*' : ''),
-              _buildPdfTableCell(item.status == 'NA' ? '*' : ''),
-            ],
-          ),
-      ],
-    );
-  }
+  // pw.Widget _buildPdfChecklist() {
+  //   return pw.Table(
+  //     border: pw.TableBorder.all(color: PdfColors.grey),
+  //     columnWidths: {
+  //       0: const pw.FlexColumnWidth(0.5),
+  //       1: const pw.FlexColumnWidth(4),
+  //       2: const pw.FlexColumnWidth(0.5),
+  //       3: const pw.FlexColumnWidth(0.7),
+  //       4: const pw.FlexColumnWidth(0.5),
+  //     },
+  //     children: [
+  //       // Header row
+  //       pw.TableRow(
+  //         decoration: const pw.BoxDecoration(color: PdfColors.blue50),
+  //         children: [
+  //           _buildPdfTableCell('No.', isHeader: true),
+  //           _buildPdfTableCell('Descriptions', isHeader: true),
+  //           _buildPdfTableCell('OK', isHeader: true),
+  //           _buildPdfTableCell('Not OK', isHeader: true),
+  //           _buildPdfTableCell('NA', isHeader: true),
+  //         ],
+  //       ),
+  //       // Checklist items
+  //       for (var item in HydraulicPumpChecklistModel.checklistItems)
+  //         pw.TableRow(
+  //           children: [
+  //             _buildPdfTableCell(item.id.toString()),
+  //             pw.Container(
+  //               padding: const pw.EdgeInsets.all(6),
+  //               child: pw.Column(
+  //                 crossAxisAlignment: pw.CrossAxisAlignment.start,
+  //                 children: [
+  //                   pw.Text(
+  //                     item.description,
+  //                     style: pw.TextStyle(
+  //                       fontSize: 9,
+  //                       font: _englishFont,
+  //                     ),
+  //                     textDirection: pw.TextDirection.ltr,
+  //                   ),
+  //                   pw.SizedBox(height: 3),
+  //                   pw.Text(
+  //                     item.arabicDescription,
+  //                     style: pw.TextStyle(
+  //                       fontSize: 9,
+  //                       font: _arabicFont,
+  //                     ),
+  //                     textDirection: pw.TextDirection.rtl,
+  //                   ),
+  //                 ],
+  //               ),
+  //             ),
+  //             _buildPdfTableCell(item.status == 'OK' ? '*' : ''),
+  //             _buildPdfTableCell(item.status == 'Not OK' ? '*' : ''),
+  //             _buildPdfTableCell(item.status == 'NA' ? '*' : ''),
+  //           ],
+  //         ),
+  //     ],
+  //   );
+  // }
 
-  pw.Widget _buildPdfTableCell(String text, {bool isHeader = false}) {
-    return pw.Container(
-      padding: const pw.EdgeInsets.all(6),
-      child: pw.Text(
-        text,
-        style: pw.TextStyle(
-          fontWeight: isHeader ? pw.FontWeight.bold : pw.FontWeight.normal,
-          fontSize: isHeader ? 10 : 9,
-          font: isHeader ? _boldEnglishFont : _englishFont,
-        ),
-        textAlign: pw.TextAlign.center,
-      ),
-    );
-  }
+  // pw.Widget _buildPdfTableCell(String text, {bool isHeader = false}) {
+  //   return pw.Container(
+  //     padding: const pw.EdgeInsets.all(6),
+  //     child: pw.Text(
+  //       text,
+  //       style: pw.TextStyle(
+  //         fontWeight: isHeader ? pw.FontWeight.bold : pw.FontWeight.normal,
+  //         fontSize: isHeader ? 10 : 9,
+  //         font: isHeader ? _boldEnglishFont : _englishFont,
+  //       ),
+  //       textAlign: pw.TextAlign.center,
+  //     ),
+  //   );
+  // }
 
-  pw.Widget _buildPdfSignatureSection() {
-    return pw.Row(
-      mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-      children: [
-        pw.Expanded(
-          child: pw.Column(
-            crossAxisAlignment: pw.CrossAxisAlignment.start,
-            children: [
-              pw.Text('Signature with name',
-                  style: pw.TextStyle(
-                    fontWeight: pw.FontWeight.bold,
-                    fontSize: 12,
-                    font: _boldEnglishFont,
-                  )),
-              pw.SizedBox(height: 20),
-              pw.Container(
-                width: double.infinity,
-                height: 1,
-                color: PdfColors.black,
-              ),
-              pw.SizedBox(height: 4),
-              pw.Text(
-                textControllers['signatureName']?.text.isEmpty ?? true
-                    ? '(Name)'
-                    : textControllers['signatureName']!.text,
-                style: pw.TextStyle(
-                  fontSize: 10,
-                  font: _englishFont,
-                ),
-              ),
-            ],
-          ),
-        ),
-        pw.SizedBox(width: 20),
-        pw.Expanded(
-          child: pw.Column(
-            crossAxisAlignment: pw.CrossAxisAlignment.start,
-            children: [
-              pw.Text('Signature date',
-                  style: pw.TextStyle(
-                    fontWeight: pw.FontWeight.bold,
-                    fontSize: 12,
-                    font: _boldEnglishFont,
-                  )),
-              pw.SizedBox(height: 20),
-              pw.Container(
-                width: double.infinity,
-                height: 1,
-                color: PdfColors.black,
-              ),
-              pw.SizedBox(height: 4),
-              pw.Text(
-                textControllers['signatureDate']?.text.isEmpty ?? true
-                    ? '(Date)'
-                    : textControllers['signatureDate']!.text,
-                style: pw.TextStyle(
-                  fontSize: 10,
-                  font: _englishFont,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
+  // pw.Widget _buildPdfSignatureSection() {
+  //   return pw.Row(
+  //     mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+  //     children: [
+  //       pw.Expanded(
+  //         child: pw.Column(
+  //           crossAxisAlignment: pw.CrossAxisAlignment.start,
+  //           children: [
+  //             pw.Text('Signature with name',
+  //                 style: pw.TextStyle(
+  //                   fontWeight: pw.FontWeight.bold,
+  //                   fontSize: 12,
+  //                   font: _boldEnglishFont,
+  //                 )),
+  //             pw.SizedBox(height: 20),
+  //             pw.Container(
+  //               width: double.infinity,
+  //               height: 1,
+  //               color: PdfColors.black,
+  //             ),
+  //             pw.SizedBox(height: 4),
+  //             pw.Text(
+  //               textControllers['signatureName']?.text.isEmpty ?? true
+  //                   ? '(Name)'
+  //                   : textControllers['signatureName']!.text,
+  //               style: pw.TextStyle(
+  //                 fontSize: 10,
+  //                 font: _englishFont,
+  //               ),
+  //             ),
+  //           ],
+  //         ),
+  //       ),
+  //       pw.SizedBox(width: 20),
+  //       pw.Expanded(
+  //         child: pw.Column(
+  //           crossAxisAlignment: pw.CrossAxisAlignment.start,
+  //           children: [
+  //             pw.Text('Signature date',
+  //                 style: pw.TextStyle(
+  //                   fontWeight: pw.FontWeight.bold,
+  //                   fontSize: 12,
+  //                   font: _boldEnglishFont,
+  //                 )),
+  //             pw.SizedBox(height: 20),
+  //             pw.Container(
+  //               width: double.infinity,
+  //               height: 1,
+  //               color: PdfColors.black,
+  //             ),
+  //             pw.SizedBox(height: 4),
+  //             pw.Text(
+  //               textControllers['signatureDate']?.text.isEmpty ?? true
+  //                   ? '(Date)'
+  //                   : textControllers['signatureDate']!.text,
+  //               style: pw.TextStyle(
+  //                 fontSize: 10,
+  //                 font: _englishFont,
+  //               ),
+  //             ),
+  //           ],
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
 
 //clear form data function with dialog
   void _clearForm() {

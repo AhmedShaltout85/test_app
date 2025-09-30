@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../hydraulic_pump_checklist_model/hydraulic_pump_checklist_items.dart';
+import '../../hydraulic_pump_checklist_model/hydraulic_pump_checklist_items.dart';
 
 class BuildChecklistItem extends StatefulWidget {
  final HydraulicPumpChecklistModel item;
