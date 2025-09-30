@@ -9,6 +9,8 @@ import 'package:test_app/hydraulic_pump_checklist_model/hydraulic_pump_checklist
 
 import 'common_widgets/build_check_list_item.dart';
 import 'common_widgets/build_header_section.dart';
+import 'common_widgets/build_info_text_field.dart';
+import 'common_widgets/build_inspection_info_section.dart';
 import 'common_widgets/build_signature_section.dart';
 import 'common_widgets/build_table_header.dart';
 
@@ -121,20 +123,20 @@ class _HydraulicPumpChecklistState extends State<HydraulicPumpChecklist> {
   // ];
 
   // Text editing controllers for the form fields
-  final Map<String, TextEditingController> _textControllers = {
-    'kitSku': TextEditingController(),
-    'itemSku': TextEditingController(),
-    'kitDescription': TextEditingController(),
-    'itemDescription': TextEditingController(text: 'HYDRAULIC PUMP'),
-    'kitSerialNo': TextEditingController(),
-    'itemSerialNo': TextEditingController(),
-    'inspectedBy': TextEditingController(),
-    'itemModel': TextEditingController(),
-    'inspectionDate': TextEditingController(),
-    'nextInspectionDate': TextEditingController(),
-    'signatureName': TextEditingController(),
-    'signatureDate': TextEditingController(),
-  };
+  // final Map<String, TextEditingController> _textControllers = {
+  //   'kitSku': TextEditingController(),
+  //   'itemSku': TextEditingController(),
+  //   'kitDescription': TextEditingController(),
+  //   'itemDescription': TextEditingController(text: 'HYDRAULIC PUMP'),
+  //   'kitSerialNo': TextEditingController(),
+  //   'itemSerialNo': TextEditingController(),
+  //   'inspectedBy': TextEditingController(),
+  //   'itemModel': TextEditingController(),
+  //   'inspectionDate': TextEditingController(),
+  //   'nextInspectionDate': TextEditingController(),
+  //   'signatureName': TextEditingController(),
+  //   'signatureDate': TextEditingController(),
+  // };
 
   bool _isGeneratingPdf = false;
   late pw.Font _arabicFont;
@@ -149,7 +151,7 @@ class _HydraulicPumpChecklistState extends State<HydraulicPumpChecklist> {
   void initState() {
     super.initState();
     // Set default inspection date to today
-    _textControllers['inspectionDate']?.text =
+    textControllers['inspectionDate']?.text =
         DateFormat('dd/MM/yyyy').format(DateTime.now());
 
     // Load fonts and images
@@ -243,7 +245,7 @@ class _HydraulicPumpChecklistState extends State<HydraulicPumpChecklist> {
   @override
   void dispose() {
     // Dispose all controllers when widget is disposed
-    for (var controller in _textControllers.values) {
+    for (var controller in textControllers.values) {
       controller.dispose();
     }
     super.dispose();
@@ -312,7 +314,7 @@ class _HydraulicPumpChecklistState extends State<HydraulicPumpChecklist> {
                   const SizedBox(height: 24),
 
                   // Inspection Information Section
-                  _buildInspectionInfoSection(),
+                  buildInspectionInfoSection(),
                   const SizedBox(height: 24),
 
                   // Checklist Table Header
@@ -331,7 +333,7 @@ class _HydraulicPumpChecklistState extends State<HydraulicPumpChecklist> {
 
                   // Signature Section
                   buildSignatureSection(
-                      'Signature Name', 'Signature date', _textControllers),
+                      'Signature Name', 'Signature date', textControllers),
                   const SizedBox(height: 32),
                 ],
               ),
@@ -420,97 +422,97 @@ class _HydraulicPumpChecklistState extends State<HydraulicPumpChecklist> {
   //   );
   // }
 
-  Widget _buildInspectionInfoSection() {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey[300]!),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              _buildInfoField('KIT SKU', 'kitSku'),
-              const SizedBox(width: 16),
-              _buildInfoField('Item SKU', 'itemSku'),
-            ],
-          ),
-          const SizedBox(height: 8),
-          Row(
-            children: [
-              _buildInfoField('KIT description', 'kitDescription'),
-              const SizedBox(width: 16),
-              _buildInfoField('Item description', 'itemDescription'),
-            ],
-          ),
-          const SizedBox(height: 8),
-          Row(
-            children: [
-              _buildInfoField('KIT serial No.', 'kitSerialNo'),
-              const SizedBox(width: 16),
-              _buildInfoField('Item serial No.', 'itemSerialNo'),
-            ],
-          ),
-          const SizedBox(height: 8),
-          Row(
-            children: [
-              _buildInfoField('Inspected by', 'inspectedBy'),
-              const SizedBox(width: 16),
-              _buildInfoField('Item Model', 'itemModel'),
-            ],
-          ),
-          const SizedBox(height: 8),
-          Row(
-            children: [
-              _buildInfoField('Inspection date', 'inspectionDate'),
-              const SizedBox(width: 16),
-              _buildInfoField('Next inspection date', 'nextInspectionDate'),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
+  // Widget _buildInspectionInfoSection() {
+  //   return Container(
+  //     padding: const EdgeInsets.all(16),
+  //     decoration: BoxDecoration(
+  //       border: Border.all(color: Colors.grey[300]!),
+  //       borderRadius: BorderRadius.circular(8),
+  //     ),
+  //     child: Column(
+  //       children: [
+  //         Row(
+  //           children: [
+  //             _buildInfoField('KIT SKU', 'kitSku'),
+  //             const SizedBox(width: 16),
+  //             _buildInfoField('Item SKU', 'itemSku'),
+  //           ],
+  //         ),
+  //         const SizedBox(height: 8),
+  //         Row(
+  //           children: [
+  //             _buildInfoField('KIT description', 'kitDescription'),
+  //             const SizedBox(width: 16),
+  //             _buildInfoField('Item description', 'itemDescription'),
+  //           ],
+  //         ),
+  //         const SizedBox(height: 8),
+  //         Row(
+  //           children: [
+  //             _buildInfoField('KIT serial No.', 'kitSerialNo'),
+  //             const SizedBox(width: 16),
+  //             _buildInfoField('Item serial No.', 'itemSerialNo'),
+  //           ],
+  //         ),
+  //         const SizedBox(height: 8),
+  //         Row(
+  //           children: [
+  //             _buildInfoField('Inspected by', 'inspectedBy'),
+  //             const SizedBox(width: 16),
+  //             _buildInfoField('Item Model', 'itemModel'),
+  //           ],
+  //         ),
+  //         const SizedBox(height: 8),
+  //         Row(
+  //           children: [
+  //             _buildInfoField('Inspection date', 'inspectionDate'),
+  //             const SizedBox(width: 16),
+  //             _buildInfoField('Next inspection date', 'nextInspectionDate'),
+  //           ],
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
-  Widget _buildInfoField(String label, String controllerKey) {
-    return Expanded(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            label,
-            style: const TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.bold,
-              color: Colors.grey,
-            ),
-          ),
-          const SizedBox(height: 4),
-          Container(
-            height: 35,
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey[400]!),
-              borderRadius: BorderRadius.circular(4),
-            ),
-            child: TextField(
-              controller: _textControllers[controllerKey],
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.grey[700],
-              ),
-              decoration: const InputDecoration(
-                border: InputBorder.none,
-                isDense: true,
-                contentPadding: EdgeInsets.symmetric(vertical: 8),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  // Widget _buildInfoField(String label, String controllerKey) {
+  //   return Expanded(
+  //     child: Column(
+  //       crossAxisAlignment: CrossAxisAlignment.start,
+  //       children: [
+  //         Text(
+  //           label,
+  //           style: const TextStyle(
+  //             fontSize: 12,
+  //             fontWeight: FontWeight.bold,
+  //             color: Colors.grey,
+  //           ),
+  //         ),
+  //         const SizedBox(height: 4),
+  //         Container(
+  //           height: 35,
+  //           padding: const EdgeInsets.symmetric(horizontal: 8),
+  //           decoration: BoxDecoration(
+  //             border: Border.all(color: Colors.grey[400]!),
+  //             borderRadius: BorderRadius.circular(4),
+  //           ),
+  //           child: TextField(
+  //             controller: _textControllers[controllerKey],
+  //             style: TextStyle(
+  //               fontSize: 14,
+  //               color: Colors.grey[700],
+  //             ),
+  //             decoration: const InputDecoration(
+  //               border: InputBorder.none,
+  //               isDense: true,
+  //               contentPadding: EdgeInsets.symmetric(vertical: 8),
+  //             ),
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   // Widget _buildTableHeader() {
   //   return Container(
@@ -735,7 +737,7 @@ class _HydraulicPumpChecklistState extends State<HydraulicPumpChecklist> {
 
     try {
       // Validate form data
-      if (_textControllers['inspectedBy']?.text.trim().isEmpty ?? true) {
+      if (textControllers['inspectedBy']?.text.trim().isEmpty ?? true) {
         throw Exception('Please enter inspector name');
       }
 
@@ -894,24 +896,24 @@ class _HydraulicPumpChecklistState extends State<HydraulicPumpChecklist> {
     return pw.Table(
       border: pw.TableBorder.all(color: PdfColors.grey),
       children: [
-        _buildPdfInfoRow('KIT SKU', _textControllers['kitSku']?.text ?? ''),
-        _buildPdfInfoRow('Item SKU', _textControllers['itemSku']?.text ?? ''),
+        _buildPdfInfoRow('KIT SKU', textControllers['kitSku']?.text ?? ''),
+        _buildPdfInfoRow('Item SKU', textControllers['itemSku']?.text ?? ''),
         _buildPdfInfoRow(
-            'KIT description', _textControllers['kitDescription']?.text ?? ''),
+            'KIT description', textControllers['kitDescription']?.text ?? ''),
         _buildPdfInfoRow('Item description',
-            _textControllers['itemDescription']?.text ?? ''),
+            textControllers['itemDescription']?.text ?? ''),
         _buildPdfInfoRow(
-            'KIT serial No.', _textControllers['kitSerialNo']?.text ?? ''),
+            'KIT serial No.', textControllers['kitSerialNo']?.text ?? ''),
         _buildPdfInfoRow(
-            'Item serial No.', _textControllers['itemSerialNo']?.text ?? ''),
+            'Item serial No.', textControllers['itemSerialNo']?.text ?? ''),
         _buildPdfInfoRow(
-            'Inspected by', _textControllers['inspectedBy']?.text ?? ''),
+            'Inspected by', textControllers['inspectedBy']?.text ?? ''),
         _buildPdfInfoRow(
-            'Item Model', _textControllers['itemModel']?.text ?? ''),
+            'Item Model', textControllers['itemModel']?.text ?? ''),
         _buildPdfInfoRow(
-            'Inspection date', _textControllers['inspectionDate']?.text ?? ''),
+            'Inspection date', textControllers['inspectionDate']?.text ?? ''),
         _buildPdfInfoRow('Next inspection date',
-            _textControllers['nextInspectionDate']?.text ?? ''),
+            textControllers['nextInspectionDate']?.text ?? ''),
       ],
     );
   }
@@ -1042,9 +1044,9 @@ class _HydraulicPumpChecklistState extends State<HydraulicPumpChecklist> {
               ),
               pw.SizedBox(height: 4),
               pw.Text(
-                _textControllers['signatureName']?.text.isEmpty ?? true
+                textControllers['signatureName']?.text.isEmpty ?? true
                     ? '(Name)'
-                    : _textControllers['signatureName']!.text,
+                    : textControllers['signatureName']!.text,
                 style: pw.TextStyle(
                   fontSize: 10,
                   font: _englishFont,
@@ -1072,9 +1074,9 @@ class _HydraulicPumpChecklistState extends State<HydraulicPumpChecklist> {
               ),
               pw.SizedBox(height: 4),
               pw.Text(
-                _textControllers['signatureDate']?.text.isEmpty ?? true
+                textControllers['signatureDate']?.text.isEmpty ?? true
                     ? '(Date)'
-                    : _textControllers['signatureDate']!.text,
+                    : textControllers['signatureDate']!.text,
                 style: pw.TextStyle(
                   fontSize: 10,
                   font: _englishFont,
@@ -1124,7 +1126,7 @@ class _HydraulicPumpChecklistState extends State<HydraulicPumpChecklist> {
 //get form data
   Map<String, String> getFormData() {
     Map<String, String> formData = {};
-    _textControllers.forEach((key, controller) {
+    textControllers.forEach((key, controller) {
       formData[key] = controller.text;
     });
 
@@ -1138,11 +1140,11 @@ class _HydraulicPumpChecklistState extends State<HydraulicPumpChecklist> {
 //clear form
   void clearForm() {
     setState(() {
-      for (var controller in _textControllers.values) {
+      for (var controller in textControllers.values) {
         controller.clear();
       }
-      _textControllers['itemDescription']?.text = 'HYDRAULIC PUMP';
-      _textControllers['inspectionDate']?.text =
+      textControllers['itemDescription']?.text = 'HYDRAULIC PUMP';
+      textControllers['inspectionDate']?.text =
           DateFormat('dd/MM/yyyy').format(DateTime.now());
 
       for (var item in HydraulicPumpChecklistModel.checklistItems) {
