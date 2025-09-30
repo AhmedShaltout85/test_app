@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:printing/printing.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
 import 'package:test_app/common_widgets/form_data/clear_form_dialog.dart';
@@ -11,13 +10,13 @@ import 'package:test_app/hydraulic_pump_checklist_model/hydraulic_pump_checklist
 // import 'common_widgets/build_pdf/build_pdf_header.dart';
 // import 'common_widgets/build_pdf/build_pdf_inspection_info_and_body.dart';
 // import 'common_widgets/build_pdf/build_pdf_signature_section.dart';
-import 'common_widgets/build_pdf/generate_pdf.dart';
 import 'common_widgets/build_report/build_check_list_item.dart';
 import 'common_widgets/build_report/build_header_section.dart';
 import 'common_widgets/build_report/build_info_text_field.dart';
 import 'common_widgets/build_report/build_inspection_info_section.dart';
 import 'common_widgets/build_report/build_signature_section.dart';
 import 'common_widgets/build_report/build_table_header.dart';
+import 'common_widgets/form_data/pdf_service/pdf_service.dart';
 
 void main() {
   runApp(const MyApp());
@@ -737,46 +736,81 @@ class _HydraulicPumpChecklistState extends State<HydraulicPumpChecklist> {
   //   );
   // }
 
+  // Future<void> _saveFormData() async {
+  //   setState(() {
+  //     _isGeneratingPdf = true;
+  //   });
+
+  //   try {
+  //     // Validate form data
+  //     if (textControllers['inspectedBy']?.text.trim().isEmpty ?? true) {
+  //       throw Exception('Please enter inspector name');
+  //     }
+
+  //     // Generate PDF
+  //     final pdf = await generatePdf(_boldEnglishFont, _englishFont,
+  //         _siemensLogo, _reportToolImage, _arabicFont);
+
+  //     // Save and share PDF
+  //     await Printing.sharePdf(
+  //         bytes: pdf,
+  //         filename:
+  //             'hydraulic-pump-checklist-${DateTime.now().millisecondsSinceEpoch}.pdf');
+
+  //     // Show success message
+  //     if (mounted) {
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         const SnackBar(
+  //           content: Text('PDF generated and shared successfully!',
+  //               style: TextStyle(color: Colors.white),
+  //               textAlign: TextAlign.center),
+  //           backgroundColor: Colors.green,
+  //         ),
+  //       );
+  //     }
+  //   } catch (e) {
+  //     if (mounted) {
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         SnackBar(
+  //           content: Text('Error generating PDF: $e'),
+  //           backgroundColor: Colors.red,
+  //         ),
+  //       );
+  //     }
+  //   } finally {
+  //     if (mounted) {
+  //       setState(() {
+  //         _isGeneratingPdf = false;
+  //       });
+  //     }
+  //   }
+  // }
+////////////////
+///
+// In your widget file, replace _saveFormData with:
+
   Future<void> _saveFormData() async {
     setState(() {
       _isGeneratingPdf = true;
     });
 
     try {
-      // Validate form data
-      if (textControllers['inspectedBy']?.text.trim().isEmpty ?? true) {
-        throw Exception('Please enter inspector name');
-      }
+      await PdfService.generateAndSharePdf(
+        textControllers: textControllers,
+        boldEnglishFont: _boldEnglishFont,
+        englishFont: _englishFont,
+        siemensLogo: _siemensLogo,
+        reportToolImage: _reportToolImage,
+        arabicFont: _arabicFont,
+        
+      );
 
-      // Generate PDF
-      final pdf = await generatePdf(_boldEnglishFont, _englishFont,
-          _siemensLogo, _reportToolImage, _arabicFont);
-
-      // Save and share PDF
-      await Printing.sharePdf(
-          bytes: pdf,
-          filename:
-              'hydraulic-pump-checklist-${DateTime.now().millisecondsSinceEpoch}.pdf');
-
-      // Show success message
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('PDF generated and shared successfully!',
-                style: TextStyle(color: Colors.white),
-                textAlign: TextAlign.center),
-            backgroundColor: Colors.green,
-          ),
-        );
+        PdfService.showSuccessMessage(context);
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Error generating PDF: $e'),
-            backgroundColor: Colors.red,
-          ),
-        );
+        PdfService.showErrorMessage(context, e);
       }
     } finally {
       if (mounted) {
@@ -786,7 +820,7 @@ class _HydraulicPumpChecklistState extends State<HydraulicPumpChecklist> {
       }
     }
   }
-
+ 
   // Future<Uint8List> _generatePdf() async {
   //   final pdf = pw.Document();
   //   final now = DateTime.now();
