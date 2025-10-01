@@ -786,7 +786,7 @@ class _HydraulicPumpChecklistState extends State<HydraulicPumpChecklist> {
   //   }
   // }
 ////////////////
-///
+  ///
 // In your widget file, replace _saveFormData with:
 
   Future<void> _saveFormData() async {
@@ -802,7 +802,6 @@ class _HydraulicPumpChecklistState extends State<HydraulicPumpChecklist> {
         siemensLogo: _siemensLogo,
         reportToolImage: _reportToolImage,
         arabicFont: _arabicFont,
-        
       );
 
       if (mounted) {
@@ -820,7 +819,7 @@ class _HydraulicPumpChecklistState extends State<HydraulicPumpChecklist> {
       }
     }
   }
- 
+
   // Future<Uint8List> _generatePdf() async {
   //   final pdf = pw.Document();
   //   final now = DateTime.now();
@@ -1183,9 +1182,11 @@ class _HydraulicPumpChecklistState extends State<HydraulicPumpChecklist> {
   }
 
 //clear form
-void clearForm() { //clear form data by checklist
-  clearFormByChecklist( HydraulicPumpChecklistModel.checklistItems);
-}
+  void clearForm() {
+    //clear form data by checklist
+    clearFormByChecklist(HydraulicPumpChecklistModel.checklistItems);
+  }
+
   void clearFormByChecklist(List<HydraulicPumpChecklistModel> checklistItems) {
     setState(() {
       for (var controller in textControllers.values) {
