@@ -236,12 +236,12 @@ class _HydraulicPumpChecklistState extends State<HydraulicPumpChecklist> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Hydraulic Pump Checklist'),
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.blue,
-        iconTheme: const IconThemeData(color: Colors.blue),
-        elevation: 2,
-        centerTitle: true,
+      //   title: const Text('Hydraulic Pump Checklist'),
+      //   backgroundColor: Colors.white,
+      //   foregroundColor: Colors.blue,
+      //   iconTheme: const IconThemeData(color: Colors.blue),
+      //   elevation: 0.0,
+      //   centerTitle: true,
         actions: [
           IconButton(
             icon: _isGeneratingPdf || !_fontLoaded || !_imagesLoaded
@@ -253,16 +253,19 @@ class _HydraulicPumpChecklistState extends State<HydraulicPumpChecklist> {
                       strokeWidth: 2,
                     ),
                   )
-                : const Icon(Icons.save),
+                : const Icon(Icons.download, color: Colors.green,),
             onPressed: (_isGeneratingPdf || !_fontLoaded || !_imagesLoaded)
                 ? null
                 : _saveFormData,
             tooltip: 'Save Form and Generate PDF',
           ),
-          IconButton(
-            icon: const Icon(Icons.clear),
-            onPressed: _clearForm,
-            tooltip: 'Clear Form',
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: IconButton(
+              icon: const Icon(Icons.clear, color: Colors.red,),
+              onPressed: _clearForm,
+              tooltip: 'Clear Form',
+            ),
           ),
         ],
       ),
