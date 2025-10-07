@@ -1,0 +1,2 @@
+- add new file from linux mint after pushing from ubuntu 
+- check the new git_push_bash_script.sh
