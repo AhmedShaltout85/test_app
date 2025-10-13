@@ -142,21 +142,21 @@ class _HydraulicPumpChecklistState extends State<HydraulicPumpChecklist> {
   Future<void> _loadResources() async {
     try {
       // Load Arabic font
-      final arabicFontData = await rootBundle.load('fonts/Amiri-Bold.ttf');
+      final arabicFontData = await rootBundle.load('assets/fonts/Amiri-Bold.ttf');
       _arabicFont = pw.Font.ttf(arabicFontData);
 
       // Load English fonts that support Unicode
       final englishFontData =
-          await rootBundle.load('fonts/NotoSans-Regular.ttf');
+          await rootBundle.load('assets/fonts/NotoSans-Regular.ttf');
       _englishFont = pw.Font.ttf(englishFontData);
 
       final boldEnglishFontData =
-          await rootBundle.load('fonts/NotoSans-Bold.ttf');
+          await rootBundle.load('assets/fonts/NotoSans-Bold.ttf');
       _boldEnglishFont = pw.Font.ttf(boldEnglishFontData);
 
       // Load images
-      final siemensLogoData = await rootBundle.load('images/siemens_logo.png');
-      final reportToolData = await rootBundle.load('images/report_tool.png');
+      final siemensLogoData = await rootBundle.load('assets/images/siemens_logo.png');
+      final reportToolData = await rootBundle.load('assets/images/report_tool.png');
 
       _siemensLogo = pw.MemoryImage(siemensLogoData.buffer.asUint8List());
       _reportToolImage = pw.MemoryImage(reportToolData.buffer.asUint8List());
@@ -183,7 +183,7 @@ class _HydraulicPumpChecklistState extends State<HydraulicPumpChecklist> {
   Future<void> _loadFallbackFonts() async {
     try {
       // Try to load any available font that supports Unicode
-      final fontData = await rootBundle.load('fonts/DejaVuSans.ttf');
+      final fontData = await rootBundle.load('assets/fonts/DejaVuSans.ttf');
       _arabicFont = pw.Font.ttf(fontData);
       _englishFont = pw.Font.ttf(fontData);
       _boldEnglishFont = pw.Font.ttf(fontData);
@@ -288,10 +288,10 @@ class _HydraulicPumpChecklistState extends State<HydraulicPumpChecklist> {
                   // Header Section
                   buildHeaderSection(
                     context,
-                    'images/siemens_logo.png',
+                    'assets/images/siemens_logo.png',
                     'Egypt Tooling Center',
                     'Hydraulic Pump Checklist',
-                    'images/report_tool.png',
+                    'assets/images/report_tool.png',
                     'Ref. ID:  ESC-T-P-001',
                     'Revision: 1.0',
                   ),
