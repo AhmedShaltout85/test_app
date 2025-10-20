@@ -15,4 +15,7 @@ abstract class PostState {}
    PostError({required this.message});
  }
 
- class PostDeleted extends PostState {}
+class PostDeleted extends PostState {
+  final int postId;
+  PostDeleted({required this.postId});
+}
