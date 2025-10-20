@@ -6,8 +6,6 @@ import 'bloc_training/cubit/post_cubit.dart';
 import 'bloc_training/view/login_to_post.dart';
 // import 'bloc_training/view/post_view.dart';
 
-
-
 // import 'view/hydraulic_pump.dart';
 
 void main() {
@@ -30,7 +28,7 @@ class MyApp extends StatelessWidget {
         // create: (_) => CounterCubit(),
         // child: const CounterView(),
         create: (_) => PostCubit()..getPosts(),
-        child: const LoginToPost(),
+        child: LoginToPost(),
         // child: const PostView(),
       ),
       // const HydraulicPumpChecklist(),

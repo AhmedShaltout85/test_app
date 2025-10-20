@@ -7,7 +7,10 @@ import '../cubit/post_cubit.dart';
 import '../model/post.dart';
 
 class LoginToPost extends StatelessWidget {
-  const LoginToPost({super.key});
+  LoginToPost({super.key});
+  // Add these as class variables
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _contentController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -32,19 +35,25 @@ class LoginToPost extends StatelessWidget {
               if (state is PostLoaded && state.posts.isNotEmpty)
                 const Text('Post created successfully!',
                     style: TextStyle(color: Colors.green)),
-
+              // In your Column
+              TextField(
+                controller: _titleController,
+                decoration: const InputDecoration(labelText: 'Title'),
+              ),
+              TextField(
+                controller: _contentController,
+                decoration: const InputDecoration(labelText: 'Content'),
+              ),
               MaterialButton(
                 onPressed: () {
-                  // Create a Post object with your data
                   final post = Post(
-                    title: 'Title',
-                    body: 'Body',
+                    title: _titleController.text,
+                    body: _contentController.text,
                     userId: 1,
                     id: 1,
                   );
-
                   context.read<PostCubit>().createPost(post);
-                  log('Post created');
+                  log('LOGGER CREATE POST: ${post.title}, ${post.body}');
                 },
                 child: const Text('Create Post'),
               ),

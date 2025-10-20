@@ -47,6 +47,21 @@ class PostCubit extends Cubit<PostState> {
       emit(PostError(message: e.toString()));
     }
   }
+  // // In your PostCubit
+  // Future<void> updatePost(Post post) async {
+  //   try {
+  //     emit(PostLoading());
+  //     final updatedPost = await RemoteRepoApi().updatePost(post);
+  //     // Update the post in your list or refetch all posts
+  //     final currentState = state as PostLoaded;
+  //     final updatedPosts = currentState.posts
+  //         .map((p) => p.id == updatedPost.id ? updatedPost : p)
+  //         .toList();
+  //     emit(PostLoaded(posts: updatedPosts));
+  //   } catch (e) {
+  //     emit(PostError(message: e.toString()));
+  //   }
+  // }
 
 //delete post
   Future<void> deletePost(int id) async {
