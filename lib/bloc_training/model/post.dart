@@ -23,4 +23,13 @@ class Post {
   static List<Post> fromJsonList(List<dynamic> jsonList) {
     return jsonList.map((json) => Post.fromJson(json)).toList();
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'userId': userId,
+      'id': id,
+      'title': title,
+      'body': body,
+    };
+  }
 }

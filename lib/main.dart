@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'bloc_training/cubit/post_cubit.dart';
-import 'bloc_training/view/post_view.dart';
+import 'bloc_training/view/login_to_post.dart';
+// import 'bloc_training/view/post_view.dart';
 
 
 
@@ -29,7 +30,8 @@ class MyApp extends StatelessWidget {
         // create: (_) => CounterCubit(),
         // child: const CounterView(),
         create: (_) => PostCubit()..getPosts(),
-        child: const PostView(),
+        child: const LoginToPost(),
+        // child: const PostView(),
       ),
       // const HydraulicPumpChecklist(),
     );

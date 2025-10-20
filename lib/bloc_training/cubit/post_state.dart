@@ -14,3 +14,5 @@ abstract class PostState {}
    final String message;
    PostError({required this.message});
  }
+
+ class PostDeleted extends PostState {}
