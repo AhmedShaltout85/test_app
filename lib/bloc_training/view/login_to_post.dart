@@ -10,7 +10,7 @@ class LoginToPost extends StatelessWidget {
   LoginToPost({super.key});
   // Add these as class variables
   final TextEditingController _titleController = TextEditingController();
-  final TextEditingController _contentController = TextEditingController();
+  final TextEditingController _bodyController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -41,14 +41,14 @@ class LoginToPost extends StatelessWidget {
                 decoration: const InputDecoration(labelText: 'Title'),
               ),
               TextField(
-                controller: _contentController,
-                decoration: const InputDecoration(labelText: 'Content'),
+                controller: _bodyController,
+                decoration: const InputDecoration(labelText: 'Body'),
               ),
               MaterialButton(
                 onPressed: () {
                   final post = Post(
                     title: _titleController.text,
-                    body: _contentController.text,
+                    body: _bodyController.text,
                     userId: 1,
                     id: 1,
                   );
