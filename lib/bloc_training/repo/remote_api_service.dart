@@ -19,6 +19,11 @@ class RemoteApiService extends RemoteRepo {
           baseUrl: Constant.baseUrl,
           connectTimeout: const Duration(seconds: 5),
           receiveTimeout: const Duration(seconds: 3),
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Headers': '*',
+          },
         ),
       );
   }
