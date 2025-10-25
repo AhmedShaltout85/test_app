@@ -16,6 +16,6 @@ abstract class PostState {}
  }
 
 class PostDeleted extends PostState {
-  final int postId;
-  PostDeleted({required this.postId});
+  final int id;
+  PostDeleted({required this.id});
 }
