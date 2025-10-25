@@ -97,10 +97,10 @@ class _PostsPageState extends State<PostsPage> {
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
                   child: ListTile(
                     title: Text(
-                      post.title ?? 'No Title',
+                      post.title ,
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    subtitle: Text(post.body ?? 'No Content'),
+                    subtitle: Text(post.body),
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
