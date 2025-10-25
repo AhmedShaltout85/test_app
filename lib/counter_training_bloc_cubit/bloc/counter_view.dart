@@ -1,29 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:test_app/counter_training_bloc_cubit/bloc/counter_bloc.dart';
 
-import 'counter_cubit.dart';
 
-class CounterView extends StatelessWidget {
-  const CounterView({super.key});
+class CounterBolcView extends StatelessWidget {
+  const CounterBolcView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Counter'),
+        title: const Text('Counter Bloc'),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Center(
-            child: BlocBuilder<CounterCubit, CounterState>(
+            child: BlocBuilder<CounterBloc, CounterState>(
               builder: (context, state) {
-                if (state is CounterIncrement) {
-                  return counterObserve(state.counter.toString(), Colors.green);
-                } else if (state is CounterDecrement) {
-                  return counterObserve(state.counter.toString(), Colors.red);
-                } else if (state is CounterReset) {
-                  return counterObserve(state.counter.toString(), Colors.black);
+                if (state is CounterIncrementState) {
+                  return counterObserve(state.counterValue.toString(), Colors.green);
+                } else if (state is CounterDecrementState) {
+                  return counterObserve(state.counterValue.toString(), Colors.red);
+                } else if (state is CounterResetState) {
+                  return counterObserve(state.counterValue.toString(), Colors.black);
                 } else {
                   return counterObserve('0', Colors.black);
                 }
@@ -35,15 +35,15 @@ class CounterView extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               MaterialButton(
-                onPressed: () => context.read<CounterCubit>().increment(),
+                onPressed: () => context.read<CounterBloc>().add(CounterIncrementEvent()),
                 child: const Icon(Icons.add, color: Colors.green),
               ),
               MaterialButton(
-                onPressed: () => context.read<CounterCubit>().reset(),
+                onPressed: () => context.read<CounterBloc>().add(CounterResetEvent()),
                 child: const Icon(Icons.stop),
               ),
               MaterialButton(
-                onPressed: () => context.read<CounterCubit>().decrement(),
+                onPressed: () => context.read<CounterBloc>().add(CounterDecrementEvent()),
                 child: const Icon(Icons.remove, color: Colors.red),
               ),
             ],
