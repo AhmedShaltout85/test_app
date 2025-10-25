@@ -10,6 +10,10 @@ abstract class PostState {}
    PostLoaded({required this.posts});
  }
 
+class PostCreated extends PostState {
+  final Post post;
+  PostCreated({required this.post});
+}
  class PostError extends PostState {
    final String message;
    PostError({required this.message});
