@@ -32,4 +32,17 @@ class Post {
       'body': body,
     };
   }
+  Post copyWith({
+    int? id,
+    String? title,
+    String? body,
+    int? userId,
+  }) {
+    return Post(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      body: body ?? this.body,
+      userId: userId ?? this.userId,
+    );
+  }
 }
