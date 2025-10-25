@@ -67,7 +67,7 @@ class PostCubit extends Cubit<PostState> {
   Future<void> deletePost(int id) async {
     try {
       await RemoteApiService().deletePost(id);
-      emit(PostDeleted(postId: id));
+      emit(PostDeleted(id: id));
     } catch (e) {
       emit(PostError(message: e.toString()));
     }
