@@ -1,4 +1,7 @@
 
+
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:test_app/bloc_training/bloc/bloc/post_bloc.dart';
@@ -273,6 +276,7 @@ class _PostsPageState extends State<PostsPage> {
                 context
                     .read<PostBloc>()
                     .add(PostUpdateEvent(post: updatedPost));
+                log('Updating post with id: ${post.id}');
                 Navigator.pop(context);
               }
             },
@@ -297,6 +301,7 @@ class _PostsPageState extends State<PostsPage> {
           ElevatedButton(
             onPressed: () {
               context.read<PostBloc>().add(PostDeleteEvent(id: post.id!));
+              log('Deleting post with id: ${post.id}');
               Navigator.pop(context);
             },
             style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
