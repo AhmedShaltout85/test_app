@@ -7,7 +7,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 // import 'bloc_training/cubit/post_cubit.dart';
 // import 'bloc_training/view/login_to_post.dart';
 import 'bloc_training/bloc/bloc/post_bloc.dart';
-import 'bloc_training/view/post_with_bloc.dart';
+// import 'bloc_training/view/post_with_bloc.dart';
+import 'bloc_training/view/stack_container.dart';
 // import 'counter_training_bloc_cubit/bloc/counter_view.dart';
 // import 'bloc_training/view/post_view.dart';
 
@@ -30,7 +31,8 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
           useMaterial3: true,
         ),
-        home: const PostsPage(),
+        home: const StackContainer(),
+        // home: const PostsPage(),
       ),
 
       // return MaterialApp(
