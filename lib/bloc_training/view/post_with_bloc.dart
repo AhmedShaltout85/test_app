@@ -166,6 +166,7 @@ class _PostsPageState extends State<PostsPage> {
         },
         child: const Icon(Icons.add),
       ),
+     
     );
   }
 

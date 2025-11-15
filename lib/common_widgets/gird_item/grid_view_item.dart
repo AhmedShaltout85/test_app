@@ -1,4 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+
+import '../../bloc_training/view/detail_screen.dart';
 
 class GridViewCardItem extends StatelessWidget {
   const GridViewCardItem({
@@ -23,12 +27,21 @@ class GridViewCardItem extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
               ),
               alignment: Alignment.center,
-              child: const Text(
-                'hotel',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+              child: InkWell(
+                onTap: () {
+                  // Handle tap event
+                  log('Tapped on item $index');
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const DetailScreen(),
+                  ));
+                },
+                child: const Text(
+                  'hotel',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),
