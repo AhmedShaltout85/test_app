@@ -1,6 +1,6 @@
 # test_app for mechanical tools and reports
 
-A  Flutter project. 
+A  Flutter project for mechincal tools reports. 
 
 ## Getting Started with test fork and contribute
 
